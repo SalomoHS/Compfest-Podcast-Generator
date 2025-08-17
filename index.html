@@ -352,7 +352,7 @@
         }
 
         /* Podcast display yang baru mirip YouTube */
-        .podcast-videos {
+        #podcastContainer {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
@@ -405,6 +405,19 @@
 
         .podcast-thumbnail:hover .play-overlay {
             opacity: 1;
+        }
+
+        .city-label {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 2;
         }
 
         .play-icon {
@@ -497,6 +510,7 @@
             border-radius: 10px;
             margin-top: 1rem;
             position: relative;
+            cursor: pointer;
         }
 
         .progress-bar {
@@ -506,39 +520,43 @@
             height: 100%;
             background: var(--primary);
             border-radius: 10px;
-            width: 30%;
+            width: 0%;
+            cursor: pointer;
+        }
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 0.2s ease;
         }
 
+        .progress-container:hover .progress-bar::after,
+        .progress-container.dragging .progress-bar::after {
+            opacity: 1;
+        }
+
+        /* Prevent text selection while dragging */
+        .progress-container.dragging {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            cursor: grabbing;
+        }
         .duration {
             display: flex;
             justify-content: space-between;
             margin-top: 0.5rem;
             font-size: 0.85rem;
             color: var(--gray);
-        }
-
-        .podcast-transcript {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: #f9f9f9;
-            border-radius: var(--radius);
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .transcript-title {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .transcript-content {
-            line-height: 1.6;
-        }
-
-        .transcript-speaker {
-            font-weight: 600;
-            color: var(--primary);
         }
 
         .loading {
@@ -684,6 +702,114 @@
             font-size: 0.8rem;
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-tag:hover {
+            background: rgba(0, 191, 165, 0.2);
+        }
+
+        .category-tag.active {
+            background: var(--secondary);
+            color: white;
+            font-weight: bold;
+        }
+
+        .city-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .city-modal {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .city-modal-header {
+            padding: 1.5rem;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .city-modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .city-modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .city-modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .city-search {
+            margin-bottom: 1rem;
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Search box */
+        .search-box {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius) 0 0 var(--radius);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+        }
+
+        .search-box button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-box button:hover {
+            background: var(--primary-dark);
         }
 
         footer {
@@ -774,8 +900,12 @@
                 justify-content: center;
             }
 
-            .podcast-videos {
+            #podcastContainer {
                 grid-template-columns: 1fr;
+            }
+
+            .city-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
         }
 
@@ -861,20 +991,28 @@
             <h3>Podcast Smart City Eksklusif</h3>
             <p>Dengarkan podcast eksklusif kami tentang kota cerdas dan perkembangannya di Indonesia.</p>
 
-            <div class="podcast-categories" style="margin: 1.5rem 0">
-                <span class="category-tag">Semua</span>
-                <span class="category-tag">Transportasi</span>
-                <span class="category-tag">Keamanan</span>
-                <span class="category-tag">Lingkungan</span>
-                <span class="category-tag">Layanan Publik</span>
-                <span class="category-tag">Ekonomi Digital</span>
+            <div class="search-box">
+                <input type="text" id="search-city" placeholder="Cari kota atau topik...">
+                <button><i class="fas fa-search"></i></button>
             </div>
 
-            <div class="podcast-videos">
+            <h4>Filter berdasarkan kota:</h4>
+            <div class="podcast-categories" style="margin: 1.5rem 0">
+                <span class="category-tag active">Semua</span>
+                <span class="category-tag">Jakarta</span>
+                <span class="category-tag">Surabaya</span>
+                <span class="category-tag">Bandung</span>
+                <span class="category-tag">Makassar</span>
+                <span class="category-tag">Yogyakarta</span>
+                <span class="category-tag" id="more-cities">Kota Lainnya...</span>
+            </div>
+
+            <div id="podcastContainer">
                 <!-- Podcast 1 -->
-                <div class="podcast-video-card">
+                <div class="podcast-video-card" data-city="Jakarta">
                     <div class="podcast-thumbnail">
-                        <img src="https://via.placeholder.com/320x180/2962ff/ffffff?text=Perkembangan+Smart+City" alt="Thumbnail Podcast">
+                        <img src="https://via.placeholder.com/320x180/2962ff/ffffff?text=Jakarta+Smart+City" alt="Thumbnail Podcast">
+                        <div class="city-label">Jakarta</div>
                         <div class="play-overlay">
                             <div class="play-icon">
                                 <i class="fas fa-play"></i>
@@ -891,9 +1029,10 @@
                 </div>
 
                 <!-- Podcast 2 -->
-                <div class="podcast-video-card">
+                <div class="podcast-video-card" data-city="Surabaya">
                     <div class="podcast-thumbnail">
-                        <img src="https://via.placeholder.com/320x180/00bfa5/ffffff?text=Transportasi+Cerdas" alt="Thumbnail Podcast">
+                        <img src="https://via.placeholder.com/320x180/00bfa5/ffffff?text=Transportasi+Surabaya" alt="Thumbnail Podcast">
+                        <div class="city-label">Surabaya</div>
                         <div class="play-overlay">
                             <div class="play-icon">
                                 <i class="fas fa-play"></i>
@@ -901,7 +1040,7 @@
                         </div>
                     </div>
                     <div class="podcast-video-info">
-                        <div class="podcast-video-title">Transportasi Cerdas: Solusi Kemacetan di Kota Besar</div>
+                        <div class="podcast-video-title">Transportasi Cerdas: Solusi Kemacetan di Surabaya</div>
                         <div class="podcast-video-meta">
                             <span>Doni & Maya</span>
                             <span>8:45 • 12 Nov 2023</span>
@@ -910,9 +1049,10 @@
                 </div>
 
                 <!-- Podcast 3 -->
-                <div class="podcast-video-card">
+                <div class="podcast-video-card" data-city="Bandung">
                     <div class="podcast-thumbnail">
-                        <img src="https://via.placeholder.com/320x180/ef5350/ffffff?text=Keamanan+Digital" alt="Thumbnail Podcast">
+                        <img src="https://via.placeholder.com/320x180/ef5350/ffffff?text=Bandung+Digital" alt="Thumbnail Podcast">
+                        <div class="city-label">Bandung</div>
                         <div class="play-overlay">
                             <div class="play-icon">
                                 <i class="fas fa-play"></i>
@@ -920,7 +1060,7 @@
                         </div>
                     </div>
                     <div class="podcast-video-info">
-                        <div class="podcast-video-title">Keamanan Digital dalam Smart City: Melindungi Data Warga</div>
+                        <div class="podcast-video-title">Keamanan Digital dalam Smart City Bandung: Melindungi Data Warga</div>
                         <div class="podcast-video-meta">
                             <span>Andi & Dina</span>
                             <span>12:17 • 8 Nov 2023</span>
@@ -929,9 +1069,10 @@
                 </div>
 
                 <!-- Podcast 4 -->
-                <div class="podcast-video-card">
+                <div class="podcast-video-card" data-city="Denpasar">
                     <div class="podcast-thumbnail">
-                        <img src="https://via.placeholder.com/320x180/ffa726/ffffff?text=Smart+Environment" alt="Thumbnail Podcast">
+                        <img src="https://via.placeholder.com/320x180/ffa726/ffffff?text=Bali+Smart+Tourism" alt="Thumbnail Podcast">
+                        <div class="city-label">Denpasar</div>
                         <div class="play-overlay">
                             <div class="play-icon">
                                 <i class="fas fa-play"></i>
@@ -939,7 +1080,7 @@
                         </div>
                     </div>
                     <div class="podcast-video-info">
-                        <div class="podcast-video-title">Smart Environment: Menuju Kota Hijau Berkelanjutan</div>
+                        <div class="podcast-video-title">Smart Tourism: Menuju Bali sebagai Destinasi Wisata Cerdas</div>
                         <div class="podcast-video-meta">
                             <span>Maya & Budi</span>
                             <span>15:30 • 5 Nov 2023</span>
@@ -948,9 +1089,10 @@
                 </div>
 
                 <!-- Podcast 5 -->
-                <div class="podcast-video-card">
+                <div class="podcast-video-card" data-city="Makassar">
                     <div class="podcast-thumbnail">
-                        <img src="https://via.placeholder.com/320x180/9c27b0/ffffff?text=Ekonomi+Digital" alt="Thumbnail Podcast">
+                        <img src="https://via.placeholder.com/320x180/9c27b0/ffffff?text=Makassar+Digital" alt="Thumbnail Podcast">
+                        <div class="city-label">Makassar</div>
                         <div class="play-overlay">
                             <div class="play-icon">
                                 <i class="fas fa-play"></i>
@@ -958,7 +1100,7 @@
                         </div>
                     </div>
                     <div class="podcast-video-info">
-                        <div class="podcast-video-title">Ekonomi Digital: Bagaimana Smart City Mendorong UMKM</div>
+                        <div class="podcast-video-title">Ekonomi Digital: Bagaimana Smart City Mendorong UMKM di Makassar</div>
                         <div class="podcast-video-meta">
                             <span>Dina & Andi</span>
                             <span>11:05 • 1 Nov 2023</span>
@@ -967,9 +1109,10 @@
                 </div>
 
                 <!-- Podcast 6 -->
-                <div class="podcast-video-card">
+                <div class="podcast-video-card" data-city="Yogyakarta">
                     <div class="podcast-thumbnail">
-                        <img src="https://via.placeholder.com/320x180/4caf50/ffffff?text=Layanan+Publik" alt="Thumbnail Podcast">
+                        <img src="https://via.placeholder.com/320x180/4caf50/ffffff?text=Yogyakarta+Smart" alt="Thumbnail Podcast">
+                        <div class="city-label">Yogyakarta</div>
                         <div class="play-overlay">
                             <div class="play-icon">
                                 <i class="fas fa-play"></i>
@@ -977,7 +1120,7 @@
                         </div>
                     </div>
                     <div class="podcast-video-info">
-                        <div class="podcast-video-title">Transformasi Layanan Publik: Aplikasi e-Government di Era Smart City</div>
+                        <div class="podcast-video-title">Transformasi Layanan Publik: Aplikasi e-Government di Yogyakarta</div>
                         <div class="podcast-video-meta">
                             <span>Sari & Doni</span>
                             <span>9:48 • 28 Okt 2023</span>
@@ -993,32 +1136,24 @@
                     <i class="fas fa-play"></i>
                 </div>
                 <div class="podcast-info">
-                    <div class="podcast-title">Perkembangan Smart City di Jakarta: Inovasi dan Tantangan</div>
-                    <div class="podcast-meta">
-                        <span><i class="fas fa-microphone"></i> Budi & Sari</span>
-                        <span><i class="fas fa-clock"></i> 10:23</span>
-                        <span><i class="fas fa-calendar"></i> 15 Nov 2023</span>
+                    <div class="podcast-title" id="player-title">Select a podcast to play</div>
+                    <div class="podcast-meta" id="player-meta">
+                        <span><i class="fas fa-microphone"></i> —</span>
+                        <span><i class="fas fa-map-marker-alt"></i> —</span>
+                        <span><i class="fas fa-clock"></i> 00:00</span>
+                        <span><i class="fas fa-calendar"></i> —</span>
                     </div>
                     <div class="progress-container">
-                        <div class="progress-bar"></div>
+                        <div class="progress-bar" id="progress-bar"></div>
                     </div>
                     <div class="duration">
-                        <span>03:12</span>
-                        <span>10:23</span>
+                        <span id="current-time">00:00</span>
+                        <span id="total-time">00:00</span>
                     </div>
                 </div>
-            </div>
 
-            <div class="podcast-transcript">
-                <h4 class="transcript-title">Transkrip Podcast</h4>
-                <div class="transcript-content">
-                    <p><span class="transcript-speaker">Budi:</span> Selamat pagi pendengar setia, kembali lagi bersama saya Budi Santoso dalam podcast Kota Berbicara. Hari ini kita akan membahas perkembangan Smart City di Jakarta.</p>
-                    <p><span class="transcript-speaker">Sari:</span> Dan saya Sari Indah, akan menemani Anda semua untuk mengupas tuntas bagaimana teknologi mengubah wajah ibu kota kita tercinta.</p>
-                    <p><span class="transcript-speaker">Budi:</span> Benar sekali Sari. Jakarta saat ini sedang bertransformasi menjadi kota cerdas dengan berbagai inovasi teknologi yang bertujuan untuk meningkatkan kualitas hidup warganya.</p>
-                    <p><span class="transcript-speaker">Sari:</span> Yang menarik, program Smart City ini bukan hanya tentang teknologi canggih, tapi juga bagaimana teknologi itu bisa memecahkan masalah perkotaan yang sudah lama dihadapi Jakarta, seperti kemacetan, banjir, dan layanan publik.</p>
-                    <p><span class="transcript-speaker">Budi:</span> Tepat sekali. Salah satu implementasi yang sudah kita lihat adalah sistem transportasi terintegrasi. JakLingko misalnya, yang menghubungkan berbagai moda transportasi publik di Jakarta.</p>
-                    <p><span class="transcript-speaker">Sari:</span> Lalu ada juga sistem pemantauan banjir real-time yang menggunakan sensor IoT di berbagai titik sungai di Jakarta. Sistem ini memberikan peringatan dini sehingga pemerintah bisa bertindak lebih cepat.</p>
-                </div>
+                <!-- The actual audio element -->
+                <audio id="audio-player"></audio>
             </div>
         </div>
 
@@ -1095,19 +1230,19 @@
                 <div class="form-group">
                     <label for="language">Bahasa</label>
                     <select id="language">
-                        <option value="id" selected>Bahasa Indonesia</option>
-                        <option value="en">English</option>
-                        <option value="jw">Bahasa Jawa</option>
-                        <option value="su">Bahasa Sunda</option>
+                        <option value="bahasa indonesia" selected>Bahasa Indonesia</option>
+                        <option value="english">English</option>
+                        <option value="javanese">Bahasa Jawa</option>
+                        <option value="sundanese">Bahasa Sunda</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="duration">Durasi (menit)</label>
-                    <input type="range" id="duration" class="range-slider" min="3" max="30" value="10" step="1">
+                    <input type="range" id="duration" class="range-slider" min="1" max="30" value="5" step="1">
                     <div class="range-info">
                         <span>3 menit</span>
-                        <span id="duration-value">10 menit</span>
+                        <span id="duration-value">5 menit</span>
                         <span>30 menit</span>
                     </div>
                 </div>
@@ -1135,16 +1270,6 @@
 
                 <div class="form-group">
                     <div class="toggle-label">
-                        <span>Efek Suara Latar</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="sound-effects" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="toggle-label">
                         <span>Musik Latar</span>
                         <label class="toggle-switch">
                             <input type="checkbox" id="background-music" checked>
@@ -1159,7 +1284,7 @@
                 <p>Pilih suara yang akan digunakan dalam podcast Anda.</p>
 
                 <div class="speaker-grid">
-                    <div class="speaker-card" data-id="speaker1">
+                    <div class="speaker-card" data-id="Budi Santoso">
                         <div class="speaker-avatar">
                             <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Budi">
                         </div>
@@ -1167,7 +1292,7 @@
                         <div class="speaker-desc">Suara maskulin & formal</div>
                     </div>
 
-                    <div class="speaker-card" data-id="speaker2">
+                    <div class="speaker-card" data-id="Andi Prasetyo">
                         <div class="speaker-avatar">
                             <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Andi">
                         </div>
@@ -1175,7 +1300,7 @@
                         <div class="speaker-desc">Suara berat & santai</div>
                     </div>
 
-                    <div class="speaker-card" data-id="speaker3">
+                    <div class="speaker-card" data-id="Doni Kusuma">
                         <div class="speaker-avatar">
                             <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Doni">
                         </div>
@@ -1183,7 +1308,7 @@
                         <div class="speaker-desc">Suara muda & energik</div>
                     </div>
 
-                    <div class="speaker-card" data-id="speaker4">
+                    <div class="speaker-card" data-id="Sari Indah">
                         <div class="speaker-avatar">
                             <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Sari">
                         </div>
@@ -1191,7 +1316,7 @@
                         <div class="speaker-desc">Suara lembut & profesional</div>
                     </div>
 
-                    <div class="speaker-card" data-id="speaker5">
+                    <div class="speaker-card" data-id="Maya Putri">
                         <div class="speaker-avatar">
                             <img src="https://randomuser.me/api/portraits/women/62.jpg" alt="Maya">
                         </div>
@@ -1199,7 +1324,7 @@
                         <div class="speaker-desc">Suara ekspresif & ceria</div>
                     </div>
 
-                    <div class="speaker-card" data-id="speaker6">
+                    <div class="speaker-card" data-id="Dina Wijaya">
                         <div class="speaker-avatar">
                             <img src="https://randomuser.me/api/portraits/women/89.jpg" alt="Dina">
                         </div>
@@ -1214,6 +1339,137 @@
             </button>
         </div>
     </main>
+
+    <!-- Modal untuk memilih kota -->
+    <div class="city-modal-backdrop" id="city-modal-backdrop">
+        <div class="city-modal">
+            <div class="city-modal-header">
+                <div class="city-modal-title">Pilih Kota</div>
+                <button class="city-modal-close" id="close-city-modal">&times;</button>
+            </div>
+            <div class="city-modal-body">
+                <input type="text" class="city-search" id="city-search" placeholder="Cari kota...">
+
+                <div class="city-grid" id="city-grid">
+                    <span class="category-tag">Jakarta</span>
+                    <span class="category-tag">Surabaya</span>
+                    <span class="category-tag">Bandung</span>
+                    <span class="category-tag">Bekasi</span>
+                    <span class="category-tag">Medan</span>
+                    <span class="category-tag">Depok</span>
+                    <span class="category-tag">Tangerang</span>
+                    <span class="category-tag">Palembang</span>
+                    <span class="category-tag">Semarang</span>
+                    <span class="category-tag">Makassar</span>
+                    <span class="category-tag">Tangerang Selatan</span>
+                    <span class="category-tag">Batam</span>
+                    <span class="category-tag">Pekanbaru</span>
+                    <span class="category-tag">Bogor</span>
+                    <span class="category-tag">Bandar Lampung</span>
+                    <span class="category-tag">Padang</span>
+                    <span class="category-tag">Malang</span>
+                    <span class="category-tag">Samarinda</span>
+                    <span class="category-tag">Tasikmalaya</span>
+                    <span class="category-tag">Serang</span>
+                    <span class="category-tag">Balikpapan</span>
+                    <span class="category-tag">Pontianak</span>
+                    <span class="category-tag">Banjarmasin</span>
+                    <span class="category-tag">Denpasar</span>
+                    <span class="category-tag">Jambi</span>
+                    <span class="category-tag">Surakarta</span>
+                    <span class="category-tag">Cimahi</span>
+                    <span class="category-tag">Cilegon</span>
+                    <span class="category-tag">Mataram</span>
+                    <span class="category-tag">Manado</span>
+                    <span class="category-tag">Yogyakarta</span>
+                    <span class="category-tag">Jayapura</span>
+                    <span class="category-tag">Kupang</span>
+                    <span class="category-tag">Bengkulu</span>
+                    <span class="category-tag">Palu</span>
+                    <span class="category-tag">Sukabumi</span>
+                    <span class="category-tag">Kendari</span>
+                    <span class="category-tag">Ambon</span>
+                    <span class="category-tag">Cirebon</span>
+                    <span class="category-tag">Dumai</span>
+                    <span class="category-tag">Pekalongan</span>
+                    <span class="category-tag">Binjai</span>
+                    <span class="category-tag">Palangka Raya</span>
+                    <span class="category-tag">Kediri</span>
+                    <span class="category-tag">Tegal</span>
+                    <span class="category-tag">Sorong</span>
+                    <span class="category-tag">Banjarbaru</span>
+                    <span class="category-tag">Pematangsiantar</span>
+                    <span class="category-tag">Banda Aceh</span>
+                    <span class="category-tag">Tarakan</span>
+                    <span class="category-tag">Singkawang</span>
+                    <span class="category-tag">Lubuk Linggau</span>
+                    <span class="category-tag">Probolinggo</span>
+                    <span class="category-tag">Pangkalpinang</span>
+                    <span class="category-tag">Tanjungpinang</span>
+                    <span class="category-tag">Padang Sidempuan</span>
+                    <span class="category-tag">Batu</span>
+                    <span class="category-tag">Bitung</span>
+                    <span class="category-tag">Prabumulih</span>
+                    <span class="category-tag">Pasuruan</span>
+                    <span class="category-tag">Ternate</span>
+                    <span class="category-tag">Banjar</span>
+                    <span class="category-tag">Gorontalo</span>
+                    <span class="category-tag">Madiun</span>
+                    <span class="category-tag">Salatiga</span>
+                    <span class="category-tag">Lhokseumawe</span>
+                    <span class="category-tag">Bontang</span>
+                    <span class="category-tag">Tanjungbalai</span>
+                    <span class="category-tag">Tebing Tinggi</span>
+                    <span class="category-tag">Langsa</span>
+                    <span class="category-tag">Palopo</span>
+                    <span class="category-tag">Metro</span>
+                    <span class="category-tag">Bima</span>
+                    <span class="category-tag">Baubau</span>
+                    <span class="category-tag">Parepare</span>
+                    <span class="category-tag">Blitar</span>
+                    <span class="category-tag">Pagar Alam</span>
+                    <span class="category-tag">Payakumbuh</span>
+                    <span class="category-tag">Mojokerto</span>
+                    <span class="category-tag">Bukittinggi</span>
+                    <span class="category-tag">Gunungsitoli</span>
+                    <span class="category-tag">Magelang</span>
+                    <span class="category-tag">Tidore Kepulauan</span>
+                    <span class="category-tag">Kotamobagu</span>
+                    <span class="category-tag">Subulussalam</span>
+                    <span class="category-tag">Pariaman</span>
+                    <span class="category-tag">Tomohon</span>
+                    <span class="category-tag">Sungaipenuh</span>
+                    <span class="category-tag">Sibolga</span>
+                    <span class="category-tag">Tual</span>
+                    <span class="category-tag">Solok</span>
+                    <span class="category-tag">Sawahlunto</span>
+                    <span class="category-tag">Padang Panjang</span>
+                    <span class="category-tag">Sabang</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk peringatan durasi -->
+    <div class="city-modal-backdrop" id="duration-warning-modal">
+        <div class="city-modal" style="max-width: 500px;">
+            <div class="city-modal-header">
+                <div class="city-modal-title">Batasan Durasi</div>
+                <button class="city-modal-close" id="close-duration-warning">&times;</button>
+            </div>
+            <div class="city-modal-body">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <i class="fas fa-exclamation-circle" style="font-size: 48px; color: var(--warning);"></i>
+                </div>
+                <h4 style="margin-bottom: 15px;">Durasi Terbatas</h4>
+                <p>Untuk versi saat ini, karena keterbatasan resource, durasi podcast hanya dapat diatur maksimal 5 menit.</p>
+                <p style="margin-top: 15px;">Pada pembaruan mendatang, kami akan meningkatkan kemampuan platform untuk menghasilkan podcast dengan durasi yang lebih panjang.</p>
+                <div style="text-align: center; margin-top: 25px;">
+                    <button class="btn btn-primary" id="understand-btn">Saya Mengerti</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="container footer-content">
@@ -1253,6 +1509,74 @@
     <div class="toast" id="toast">Pengaturan berhasil disimpan!</div>
 
     <script>
+        let currentAudio = null;
+        // let isPlaying = false;
+        async function loadPodcasts() {
+            try {
+                const res = await fetch('https://compfest-podcast-generator-salomohs-salomo-hendrians-projects.vercel.app/fetch_podcast'); // your API endpoint
+                const data = await res.json();
+                
+                const container = document.getElementById('podcastContainer');
+                container.innerHTML = ''; // clear existing content
+
+                data.podcasts.forEach(podcast => {
+                    const card = document.createElement('div');
+                    card.classList.add('podcast-video-card');
+                    card.setAttribute('data-city', podcast.city?.cityName || '');
+
+                    card.innerHTML = `
+                        <div class="podcast-thumbnail">
+                            <img src="#" alt="Thumbnail Podcast">
+                            <div class="city-label">${podcast.city?.cityName || ''}</div>
+                            <div class="play-overlay">
+                                <div class="play-btn">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="podcast-video-info">
+                            <div class="podcast-video-title">${podcast?.title || 'TITLE'}</div>
+                            <div class="podcast-video-meta">
+                                <span>${podcast.speaker1?.speakerName || 'SPEKAER'}</span>
+                                <span>${podcast?.duration || '345'} • ${podcast.createdAt} ${podcast.timezone}</span>
+                            </div>
+                        </div>
+                    `;
+                    card.addEventListener('click', () => loadIntoPlayer(podcast));    
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error loading podcasts:', error);
+            }
+        }
+
+        function loadIntoPlayer(podcast) {
+            const audio = document.getElementById('audio-player');
+            const title = document.getElementById('player-title');
+            const meta = document.getElementById('player-meta');
+            const playBtn = document.getElementById('play-btn');
+            
+            audio.pause();
+                audio.currentTime = 0;
+
+                audio.src = podcast.audio;
+                title.textContent = podcast.title;
+                meta.innerHTML = `
+                    <span><i class="fas fa-microphone"></i> ${podcast.speaker1?.speakerName || 'SPEKAER'} & ${podcast.speaker2?.speakerName || 'SPEKAER'} </span>
+
+                    <span><i class="fas fa-map-marker-alt"></i> ${podcast.city.cityName}</span>
+                    <span><i class="fas fa-clock"></i> ${podcast.duration}</span>
+                    <span><i class="fas fa-calendar"></i> ${podcast.createdAt}</span>
+                `;
+
+                audio.play();
+                currAudio = audio
+                isPlaying = true;
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+
+        // Load when page opens
+        document.addEventListener('DOMContentLoaded', loadPodcasts);
         // Tab switching functionality
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
@@ -1295,12 +1619,44 @@
             });
         });
 
-        // Duration slider
+        // Duration slider with warning
         const durationSlider = document.getElementById('duration');
         const durationValue = document.getElementById('duration-value');
+        const durationWarningModal = document.getElementById('duration-warning-modal');
+        const closeDurationWarning = document.getElementById('close-duration-warning');
+        const understandBtn = document.getElementById('understand-btn');
 
         durationSlider.addEventListener('input', () => {
-            durationValue.textContent = `${durationSlider.value} menit`;
+            const value = parseInt(durationSlider.value);
+            durationValue.textContent = `${value} menit`;
+
+            // Tampilkan peringatan jika durasi > 5 menit
+            if (value > 5) {
+                durationWarningModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Mencegah scrolling
+
+                // Reset nilai slider ke 5 menit
+                setTimeout(() => {
+                    durationSlider.value = 5;
+                    durationValue.textContent = '5 menit';
+                }, 100);
+            }
+        });
+
+        // Tutup modal peringatan durasi
+        function closeDurationWarningModal() {
+            durationWarningModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Kembalikan scrolling
+        }
+
+        closeDurationWarning.addEventListener('click', closeDurationWarningModal);
+        understandBtn.addEventListener('click', closeDurationWarningModal);
+
+        // Juga tutup modal ketika klik di luar modal
+        durationWarningModal.addEventListener('click', (e) => {
+            if (e.target === durationWarningModal) {
+                closeDurationWarningModal();
+            }
         });
 
         // File upload handling
@@ -1336,6 +1692,7 @@
             }
         });
 
+        let selectedFiles = []
         function handleFiles(files) {
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
@@ -1363,7 +1720,7 @@
                 `;
 
                 fileList.appendChild(fileItem);
-
+                selectedFiles.push(file);
                 // Add remove functionality
                 const removeBtn = fileItem.querySelector('.remove-file');
                 removeBtn.addEventListener('click', () => {
@@ -1398,7 +1755,6 @@
                 showToast('Pilih minimal 1 pembawa acara', 'error');
                 return;
             }
-
             showToast('Pengaturan berhasil disimpan!');
         });
 
@@ -1408,34 +1764,32 @@
 
             const title = document.getElementById('podcast-title').value;
             const description = document.getElementById('podcast-description').value;
-            const file = document.getElementById('file-input').files[0];
-            console.log(file)
 
             if (!title || !description) {
-                showToast('Mohon isi judul dan deskripsi podcast', 'error');
+                showToast('Mohon isi semua informasi yang diperlukan', 'error');
                 return;
             }
 
             // Hide form and show download progress
             document.getElementById('podcast-form').style.display = 'none';
             document.getElementById('download-progress').style.display = 'block';
-            
+
             // Simulate progress
             let progress = 0;
             const progressBar = document.getElementById('progress-bar-fill');
             const progressText = document.getElementById('progress-text');
 
             const formData = new FormData();
-            formData.append('title', title);
             formData.append('description', description);
-
-            // const fileInput = document.getElementById('file-input');
-            // const file = fileInput.files[0]; // Ambil file pertama
-
-            if (file) {
-                formData.append('file', file); // Tambahkan ke FormData
-            }
-
+            formData.append('language',document.getElementById("language").value)
+            formData.append('duration',document.getElementById("duration").value)
+            formData.append('style',document.getElementById("style").value)
+            formData.append('format',document.getElementById("format").value)
+            formData.append('bgm',document.getElementById("background-music").checked)
+            formData.append('speakers',selectedSpeakers)
+            selectedFiles.forEach(file => {
+                formData.append("files", file); // send as array
+            });
 
             try {
                 const response = await fetch('https://compfest-podcast-generator-salomohs-salomo-hendrians-projects.vercel.app/generate_podcast', {
@@ -1444,7 +1798,7 @@
                 })
 
                 const data = await response.json() 
-                console.log(data)
+                
 
                 if (!response.ok) {
                     throw new Error('Terjadi kesalahan saat mengirim permintaan.');
@@ -1460,37 +1814,6 @@
             } catch (error) {
                 alert('Gagal membuat podcast: ' + error.message);
             }
-
-            // const progressInterval = setInterval(() => {
-            //     progress += 5;
-            //     progressBar.style.width = `${progress}%`;
-
-            //     if (progress < 30) {
-            //         progressText.textContent = `Memproses konten (${progress}%)`;
-            //     } else if (progress < 60) {
-            //         progressText.textContent = `Menghasilkan audio (${progress}%)`;
-            //     } else if (progress < 90) {
-            //         progressText.textContent = `Menerapkan efek suara (${progress}%)`;
-            //     } else {
-            //         progressText.textContent = `Menyelesaikan podcast (${progress}%)`;
-            //     }
-
-            //     if (progress >= 100) {
-            //         clearInterval(progressInterval);
-
-            //         // Show download success after completion
-            //         setTimeout(() => {
-            //             document.getElementById('download-progress').style.display = 'none';
-            //             document.getElementById('download-success').style.display = 'block';
-
-            //             // Set download link file name to match the title
-            //             const downloadLink = document.getElementById('download-link');
-            //             downloadLink.setAttribute('download', `${title.replace(/\s+/g, '_')}.mp3`);
-            //             downloadLink.href = 'https://dbdlxpquyiwpntlsizle.supabase.co/storage/v1/object/public/podcast//O%20Holy%20Nught_mixdown.mp3'; // In a real application, this would be the actual file URL
-            //             showToast('Podcast berhasil dibuat!', 'success');
-            //         }, 500);
-            //     }
-            // }, 150);
         });
 
         // Create another podcast button
@@ -1498,6 +1821,7 @@
             // Reset form
             document.getElementById('podcast-form').reset();
             document.getElementById('file-list').innerHTML = '';
+            selectedFiles = []
 
             // Show form again
             document.getElementById('download-success').style.display = 'none';
@@ -1518,26 +1842,134 @@
 
         // Play button functionality for the main player
         let isPlaying = false;
-        const playBtn = document.getElementById('play-btn');
+        let currAudio
+        document.getElementById('play-btn').addEventListener('click', () => {
+            const audio = document.getElementById('audio-player');
+            
+            if (!audio.src) return; // No podcast loaded yet
 
-        playBtn.addEventListener('click', () => {
             if (isPlaying) {
-                playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                isPlaying = false;
-            } else {
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                isPlaying = true;
+                
+                if (audio != currAudio && currAudio) {
+                    audio.play();
+                    audio.currentTime = 0;
+                } else{
+                audio.pause();
+                    document.getElementById('play-btn').innerHTML = '<i class="fas fa-play"></i>';
+                }
+            }  
+            else {
+                audio.play();
+                document.getElementById('play-btn').innerHTML = '<i class="fas fa-pause"></i>';
+                currAudio = audio
             }
+            isPlaying = !isPlaying;
         });
+
+        // Progress bar & time update
+        
+        document.getElementById('audio-player').addEventListener('timeupdate', () => {
+            const audio = document.getElementById('audio-player');
+            const progressBar = document.getElementById('progress-bar');
+            const currentTimeElem = document.getElementById('current-time');
+            const totalTimeElem = document.getElementById('total-time');
+
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            currentTimeElem.textContent = formatTime(audio.currentTime);
+            totalTimeElem.textContent = formatTime(audio.duration);
+        });
+        const progressContainer = document.querySelector('.progress-container');
+const audio = document.getElementById('audio-player');
+let isDragging = false;
+
+// Function to update audio time based on click/drag position
+function updateAudioTime(e) {
+    const rect = progressContainer.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const containerWidth = rect.width;
+    const clickPercentage = Math.max(0, Math.min(1, clickX / containerWidth));
+    
+    if (audio.duration) {
+        audio.currentTime = clickPercentage * audio.duration;
+    }
+}
+
+// Click to seek
+progressContainer.addEventListener('click', (e) => {
+    if (!isDragging) {
+        updateAudioTime(e);
+    }
+});
+
+// Mouse down - start dragging
+progressContainer.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    updateAudioTime(e);
+    progressContainer.classList.add('dragging');
+});
+
+// Mouse move - continue dragging
+document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+        updateAudioTime(e);
+    }
+});
+
+// Mouse up - stop dragging
+document.addEventListener('mouseup', () => {
+    if (isDragging) {
+        isDragging = false;
+        progressContainer.classList.remove('dragging');
+    }
+});
+
+// Touch events for mobile support
+progressContainer.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    const touch = e.touches[0];
+    updateAudioTime(touch);
+    progressContainer.classList.add('dragging');
+    e.preventDefault();
+});
+
+document.addEventListener('touchmove', (e) => {
+    if (isDragging) {
+        const touch = e.touches[0];
+        updateAudioTime(touch);
+        e.preventDefault();
+    }
+});
+
+document.addEventListener('touchend', () => {
+    if (isDragging) {
+        isDragging = false;
+        progressContainer.classList.remove('dragging');
+    }
+});
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '00:00';
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+
 
         // Make podcast video cards clickable
         document.querySelectorAll('.podcast-video-card').forEach(card => {
             card.addEventListener('click', () => {
                 // Update the main player with this podcast's info
                 const title = card.querySelector('.podcast-video-title').textContent;
-                const meta = card.querySelector('.podcast-video-meta').textContent;
+                const cityLabel = card.querySelector('.city-label').textContent;
 
                 document.querySelector('.podcast-title').textContent = title;
+
+                // Update city in the meta data
+                const metaElements = document.querySelectorAll('.podcast-meta span');
+                metaElements[1].innerHTML = `<i class="fas fa-map-marker-alt"></i> ${cityLabel}`;
 
                 // Scroll to the player
                 document.querySelector('.podcast-player').scrollIntoView({ behavior: 'smooth' });
@@ -1546,22 +1978,178 @@
                 playBtn.innerHTML = '<i class="fas fa-pause"></i>';
                 isPlaying = true;
 
-                showToast('Memutar podcast: ' + title);
+                showToast(`Memutar podcast: ${title}`);
+            });
+        });
+
+        // City modal functionality
+        const cityModalBackdrop = document.getElementById('city-modal-backdrop');
+        const closeModalBtn = document.getElementById('close-city-modal');
+        const moreCitiesBtn = document.getElementById('more-cities');
+        const citySearch = document.getElementById('city-search');
+        const cityGrid = document.getElementById('city-grid');
+        const cityTags = cityGrid.querySelectorAll('.category-tag');
+
+        // Open city modal
+        moreCitiesBtn.addEventListener('click', () => {
+            cityModalBackdrop.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+            citySearch.focus();
+        });
+
+        // Close city modal
+        closeModalBtn.addEventListener('click', closeModal);
+
+        cityModalBackdrop.addEventListener('click', (e) => {
+            if (e.target === cityModalBackdrop) {
+                closeModal();
+            }
+        });
+
+        function closeModal() {
+            cityModalBackdrop.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+            citySearch.value = '';
+            filterCities('');
+        }
+
+        // Filter cities in modal
+        citySearch.addEventListener('input', () => {
+            filterCities(citySearch.value.toLowerCase());
+        });
+
+        function filterCities(searchTerm) {
+            cityTags.forEach(tag => {
+                const cityName = tag.textContent.toLowerCase();
+                if (cityName.includes(searchTerm)) {
+                    tag.style.display = 'inline-block';
+                } else {
+                    tag.style.display = 'none';
+                }
+            });
+        }
+
+        // Select city from modal
+        cityTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                const selectedCity = tag.textContent;
+
+                // Add the city to the main filter if it's not already there
+                const mainCategories = document.querySelector('.podcast-categories');
+
+                // Check if city already exists in the filter
+                let cityExists = false;
+                document.querySelectorAll('.podcast-categories .category-tag').forEach(existingTag => {
+                    if (existingTag.textContent === selectedCity && existingTag.id !== 'more-cities') {
+                        cityExists = true;
+                        existingTag.click(); // Activate the existing tag
+                    }
+                });
+
+                // If city doesn't exist, add it and make it active
+                if (!cityExists) {
+                    // Deactivate all current tags
+                    document.querySelectorAll('.podcast-categories .category-tag').forEach(t => t.classList.remove('active'));
+
+                    // Create new tag and add it before "Kota Lainnya"
+                    const newTag = document.createElement('span');
+                    newTag.className = 'category-tag active';
+                    newTag.textContent = selectedCity;
+                    newTag.addEventListener('click', function() {
+                        // Same functionality as other tags
+                        document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
+
+                        // Filter podcast cards
+                        const cityFilter = this.textContent.trim();
+                        const podcastCards = document.querySelectorAll('.podcast-video-card');
+
+                        podcastCards.forEach(card => {
+                            const cityLabel = card.getAttribute('data-city');
+
+                            if (cityFilter === 'Semua' || cityLabel === cityFilter) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+
+                        showToast(`Menampilkan podcast dari ${cityFilter}`);
+                    });
+
+                    mainCategories.insertBefore(newTag, moreCitiesBtn);
+
+                    // Filter podcast cards
+                    const podcastCards = document.querySelectorAll('.podcast-video-card');
+                    podcastCards.forEach(card => {
+                        const cityLabel = card.getAttribute('data-city');
+
+                        if (cityLabel === selectedCity) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    showToast(`Menampilkan podcast dari ${selectedCity}`);
+                }
+
+                closeModal();
             });
         });
 
         // Category tags click handler
-        document.querySelectorAll('.category-tag').forEach(tag => {
-            tag.addEventListener('click', () => {
-                // Remove active class from all tags
-                document.querySelectorAll('.category-tag').forEach(t => t.style.fontWeight = 'normal');
+        document.querySelectorAll('.podcast-categories .category-tag').forEach(tag => {
+            if (tag.id !== 'more-cities') {
+                tag.addEventListener('click', () => {
+                    // Remove active class from all tags
+                    document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
 
-                // Add active class to clicked tag
-                tag.style.fontWeight = 'bold';
+                    // Add active class to clicked tag
+                    tag.classList.add('active');
 
-                // Show filter applied notification
-                showToast(`Menampilkan podcast kategori: ${tag.textContent}`);
+                    // Filter cards based on city selection (except "Semua")
+                    const cityFilter = tag.textContent.trim();
+                    const podcastCards = document.querySelectorAll('.podcast-video-card');
+
+                    podcastCards.forEach(card => {
+                        const cityLabel = card.getAttribute('data-city');
+
+                        if (cityFilter === 'Semua' || cityLabel === cityFilter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Show filter applied notification
+                    showToast(`Menampilkan podcast dari ${cityFilter}`);
+                });
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('search-city');
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const podcastCards = document.querySelectorAll('.podcast-video-card');
+
+            podcastCards.forEach(card => {
+                const title = card.querySelector('.podcast-video-title').textContent.toLowerCase();
+                const city = card.getAttribute('data-city').toLowerCase();
+
+                if (title.includes(searchTerm) || city.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
             });
+
+            // If there's an active filter, deactivate it
+            if (searchTerm !== '') {
+                document.querySelectorAll('.category-tag').forEach(tag => tag.classList.remove('active'));
+                document.querySelector('.category-tag:first-child').classList.add('active');
+            }
         });
 
         // Set default selected speaker
