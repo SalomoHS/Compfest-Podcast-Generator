@@ -1552,9 +1552,15 @@
         // Speaker selection functionality
         const speakerCards = document.querySelectorAll('.speaker-card');
         let selectedSpeakers = [];
+        let userHasSelected = false;
 
         speakerCards.forEach(card => {
             card.addEventListener('click', () => {
+                if (!userHasSelected) {
+                    // Reset default saat pertama kali user pilih
+                    selectedSpeakers = [];
+                    userHasSelected = true;
+                }
                 const speakerId = card.getAttribute('data-id');
 
                 if (card.classList.contains('selected')) {
@@ -2114,5 +2120,6 @@ document.addEventListener('touchend', () => {
     </script>
 </body>
 </html>
+
 
 
