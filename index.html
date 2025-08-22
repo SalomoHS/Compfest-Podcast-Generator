@@ -1740,7 +1740,9 @@
             formData.append('style',document.getElementById("style").value)
             formData.append('format',document.getElementById("format").value)
             formData.append('bgm',document.getElementById("background-music").checked)
-            formData.append('speakers',selectedSpeakers)
+            selectedSpeakers.forEach(speaker => {
+                    formData.append("speakers", speaker);
+            });
             selectedFiles.forEach(file => {
                 formData.append("files", file); // send as array
             });
@@ -2112,4 +2114,5 @@ document.addEventListener('touchend', () => {
     </script>
 </body>
 </html>
+
 
