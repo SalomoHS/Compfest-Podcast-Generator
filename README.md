@@ -24,9 +24,9 @@
 </p>
 <p align="center">
   <a href="https://youtu.be/3oToZepB7tM">
-      <img src="https://custom-icon-badges.demolab.com/badge/-Video%20Demo-B71C1C?style=for-the-badge&logo=YouTube&logoColor=white" title="Demo video" alt="Kota Berbicara Website's"/></a>
+      <img src="https://custom-icon-badges.demolab.com/badge/-Video%20Demo-B71C1C?style=for-the-badge&logo=YouTube&logoColor=white" title="Demo video" alt="Demo Video"/></a>
   <a href="https://www.tiktok.com/@kotaberbicara">
-      <img src="https://custom-icon-badges.demolab.com/badge/-Kota%20Berbicara%20Tiktok-black?style=for-the-badge&logo=TIktok&logoColor=white" title="Kota Berbicara tiktok's" alt="Kota Berbicara Website's"/></a>
+      <img src="https://custom-icon-badges.demolab.com/badge/-Kota%20Berbicara%20Tiktok-black?style=for-the-badge&logo=TIktok&logoColor=white" title="Kota Berbicara tiktok's" alt="Kota Berbicara Titkok's"/></a>
 </p>
 
 
