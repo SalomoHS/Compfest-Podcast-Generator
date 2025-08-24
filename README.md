@@ -59,7 +59,11 @@
 ---
 ### Kontributor
 <p>
-  <img alt="Salomo Hendrian Sudjono" title="Salomo Hendrian Sudjono" src="https://custom-icon-badges.demolab.com/badge/-Salomo%20Hendrian%20Sudjono-blue?style=for-the-badge&logo=person-fill&logoColor=white"/>
-  <img alt="Matthew Lefrand" title="Caroline Angelina Sunarya" src="https://custom-icon-badges.demolab.com/badge/-Matthew%20Lefrandt-blue?style=for-the-badge&logo=person-fill&logoColor=white"/>
+  <a href="https://www.linkedin.com/in/salomohendriansudjono/">
+    <img alt="Salomo Hendrian Sudjono" title="Salomo Hendrian Sudjono" src="https://custom-icon-badges.demolab.com/badge/-Salomo%20Hendrian%20Sudjono-blue?style=for-the-badge&logo=person-fill&logoColor=white"/>
+  </a>
+  <a href="https://id.linkedin.com/in/matthew-lefrandt-6578a1298/">
+    <img alt="Matthew Lefrandt" title="Matthew Lefrandt" src="https://custom-icon-badges.demolab.com/badge/-Matthew%20Lefrandt-blue?style=for-the-badge&logo=person-fill&logoColor=white"/>
+  </a>
 </p>
 
