@@ -53,8 +53,8 @@
 ### Backend Source Code
 | Backend | Description | Source Code |
 |-----------------|-------------|-------------|
-| Website Backend | Backend for handle website data | [View Source Code](https://github.com/SalomoHS/Compfest-Website-API) |
-| Publication Backend | Backend for handle publication data | [View Source Code](https://github.com/SalomoHS/Compfest-Publication-API) |
+| Website Backend | Backend untuk menangani proses pada website | [Lihat Source Code](https://github.com/SalomoHS/Compfest-Website-API) |
+| Publication Backend | Backend untuk menangani proses publikasi konten | [Lihat Source Code](https://github.com/SalomoHS/Compfest-Publication-API) |
 
 ---
 ### Kontributor
