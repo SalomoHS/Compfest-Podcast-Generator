@@ -1,7 +1,7 @@
 
 
 <p align="center">
-  <h3 align="center">Kota Berbicara Frontend</h3>
+  <h3 align="center">Kota Berbicara - Frontend</h3>
 </p>
 
 <p align="center">
