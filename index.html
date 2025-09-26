@@ -2460,6 +2460,45 @@ document.addEventListener('touchend', () => {
             }
     });
   });
+        const resetBtn = document.querySelector('.reset-btn');
+  resetBtn.addEventListener('click', (e) => {
+    cityFilter = 'Semua';
+    topicFilter = 'Semua';
+    languageFilter = 'Semua';
+
+    const dropdownCityBtn = document.querySelector('.dropdown-btn');
+    const dropdownGenreBtn = document.querySelector('.dropdown-genre-btn');
+    const dropdownLanguageBtn = document.querySelector('.dropdown-language-btn');
+
+    // Hapus semua active class
+    document.querySelectorAll('.category-tag, .genre-tag, .language-tag')
+        .forEach(tag => tag.classList.remove('active'));
+
+    document.querySelectorAll('.category-tag').forEach(tag => {
+    if (tag.textContent.trim() === 'Semua') {
+        tag.classList.add('active');
+        }
+    });
+
+    document.querySelectorAll('.genre-tag').forEach(tag => {
+        if (tag.textContent.trim() === 'Semua') {
+        tag.classList.add('active');
+        }
+    });
+
+    document.querySelectorAll('.language-tag').forEach(tag => {
+        if (tag.textContent.trim() === 'Semua') {
+        tag.classList.add('active');
+        }
+    });
+
+    dropdownCityBtn.textContent = "Pilih Kota" + ' ▼';
+    dropdownGenreBtn.textContent = "Pilih Topik" + ' ▼';
+    dropdownLanguageBtn.textContent = "Pilih Bahasa" + ' ▼';
+
+    showToast(`Menampilkan semua podcast`);
+    applyFilters(); 
+});
 
   function applyFilters() {
     const podcastCards = document.querySelectorAll('.podcast-video-card');
@@ -2511,6 +2550,7 @@ document.addEventListener('touchend', () => {
     </script>
 </body>
 </html>
+
 
 
 
