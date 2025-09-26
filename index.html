@@ -1732,8 +1732,13 @@
                             Kunjungi sumber berita
                         </a>
                     `;
-                    card.addEventListener('click', () => loadIntoPlayer(podcast));    
                     container.appendChild(card);
+                    const playBtn = card.querySelector('.play-btn');
+
+                    playBtn.addEventListener('click', (e) => {
+                        e.stopPropagation(); 
+                        loadIntoPlayer(podcast);
+                    });
                 });
             } catch (error) {
                 console.error('Error loading podcasts:', error);
@@ -2476,6 +2481,7 @@ document.addEventListener('touchend', () => {
     </script>
 </body>
 </html>
+
 
 
 
