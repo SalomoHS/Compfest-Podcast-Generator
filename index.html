@@ -765,7 +765,8 @@
             color: white;
             font-weight: bold;
         }
-.genre-tag {
+
+        .genre-tag {
             display: inline-block;
             padding: 0.3rem 0.8rem;
             background: rgba(0, 191, 165, 0.1);
@@ -811,17 +812,42 @@
             font-weight: bold;
         }
 
-        /* Dropdown style */
-  .dropdown {
+        .reset {
+    position: relative;
+  }
+  .reset-btn {
+    padding: 8px 12px;
+    border-radius: 16px;
+    background: rgba(191, 0, 0, 0.1);
+    color: rgb(227, 57, 57);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;   /* bikin icon & teks sejajar */
+    align-items: center;    /* biar vertikalnya pas */
+    gap: 8px;               /* kasih jarak 8px */
+
+  }
+
+  .reset-btn:hover{
+    background: rgba(191, 0, 0, 0.333);
+  }
+        
+.dropdown {
     position: relative;
   }
   .dropdown-btn {
     padding: 8px 12px;
     border-radius: 16px;
-    background: #eee;
+    background: rgba(0, 191, 165, 0.1);
+    color: var(--secondary);
     border: none;
     cursor: pointer;
   }
+
+  .dropdown-btn:hover{
+    background: rgba(0, 191, 166, 0.333)
+  }
+
   .dropdown-content {
     display: none;
     position: absolute;
@@ -841,7 +867,7 @@
     padding: 10px;
   }
   .dropdown-content .category-tag:hover {
-    background: #f0f0f0;
+    background: rgba(0, 191, 166, 0.333)
   }
   .dropdown.open .dropdown-content {
     display: block;
@@ -854,9 +880,14 @@
   .dropdown-genre-btn {
     padding: 8px 12px;
     border-radius: 16px;
-    background: #eee;
+    background: rgba(0, 191, 165, 0.1);
+    color: var(--secondary);
     border: none;
     cursor: pointer;
+  }
+
+  .dropdown-genre-btn:hover{
+    background: rgba(0, 191, 166, 0.333)
   }
   .dropdown-genre-content {
     display: none;
@@ -877,7 +908,7 @@
     padding: 10px;
   }
   .dropdown-genre-content .genre-tag:hover {
-    background: #f0f0f0;
+    background: rgba(0, 191, 166, 0.333)
   }
   .dropdown-genre.open .dropdown-genre-content {
     display: block;
@@ -890,10 +921,15 @@
   .dropdown-language-btn {
     padding: 8px 12px;
     border-radius: 16px;
-    background: #eee;
+    background: rgba(0, 191, 165, 0.1);
+    color: var(--secondary);
     border: none;
     cursor: pointer;
   }
+  .dropdown-language-btn:hover{
+    background: rgba(0, 191, 166, 0.333)
+  }
+
   .dropdown-language-content {
     display: none;
     position: absolute;
@@ -913,7 +949,7 @@
     padding: 10px;
   }
   .dropdown-language-content .language-tag:hover {
-    background: #f0f0f0;
+    background: rgba(0, 191, 166, 0.333)
   }
   .dropdown-language.open .dropdown-language-content {
 
@@ -1274,6 +1310,11 @@
                       <span class="language-tag">Bahasa Sunda</span>
                     </div>
                   </div>
+
+                <div class="reset">
+                    <button class="reset-btn"><i class="fa-solid fa-rotate-right"></i> Reset Filter</button>
+                </div>
+                
             </div>
 
             <div id="podcastContainer">
@@ -2470,6 +2511,7 @@ document.addEventListener('touchend', () => {
     </script>
 </body>
 </html>
+
 
 
 
