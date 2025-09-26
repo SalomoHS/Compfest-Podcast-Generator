@@ -765,7 +765,195 @@
             color: white;
             font-weight: bold;
         }
+.genre-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 191, 165, 0.1);
+            color: var(--secondary);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
 
+        .genre-tag:hover {
+            background: rgba(0, 191, 165, 0.2);
+        }
+
+        .genre-tag.active {
+            background: var(--secondary);
+            color: white;
+            font-weight: bold;
+        }
+
+        .language-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 191, 165, 0.1);
+            color: var(--secondary);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .language-tag:hover {
+            background: rgba(0, 191, 165, 0.2);
+        }
+
+        .language-tag.active {
+            background: var(--secondary);
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Dropdown style */
+  .dropdown {
+    position: relative;
+  }
+  .dropdown-btn {
+    padding: 8px 12px;
+    border-radius: 16px;
+    background: #eee;
+    border: none;
+    cursor: pointer;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+    min-width: 160px;
+    z-index: 1000;
+  }
+  .dropdown-content .category-tag {
+    display: block;
+    margin: 0;
+    border-radius: 0;
+    padding: 10px;
+  }
+  .dropdown-content .category-tag:hover {
+    background: #f0f0f0;
+  }
+  .dropdown.open .dropdown-content {
+    display: block;
+  }
+
+  /* Dropdown style */
+  .dropdown-genre {
+    position: relative;
+  }
+  .dropdown-genre-btn {
+    padding: 8px 12px;
+    border-radius: 16px;
+    background: #eee;
+    border: none;
+    cursor: pointer;
+  }
+  .dropdown-genre-content {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+    min-width: 160px;
+    z-index: 1000;
+  }
+  .dropdown-genre-content .genre-tag {
+    display: block;
+    margin: 0;
+    border-radius: 0;
+    padding: 10px;
+  }
+  .dropdown-genre-content .genre-tag:hover {
+    background: #f0f0f0;
+  }
+  .dropdown-genre.open .dropdown-genre-content {
+    display: block;
+  }
+
+  /* Dropdown style */
+  .dropdown-language {
+    position: relative;
+  }
+  .dropdown-language-btn {
+    padding: 8px 12px;
+    border-radius: 16px;
+    background: #eee;
+    border: none;
+    cursor: pointer;
+  }
+  .dropdown-language-content {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+    min-width: 160px;
+    z-index: 1000;
+  }
+  .dropdown-language-content .language-tag {
+    display: block;
+    margin: 0;
+    border-radius: 0;
+    padding: 10px;
+  }
+  .dropdown-language-content .language-tag:hover {
+    background: #f0f0f0;
+  }
+  .dropdown-language.open .dropdown-language-content {
+
+    display: block;
+  }
+
+    .genre-label {
+    position: absolute;
+    width: 100%;
+    background: #333;
+    text-align: center;
+    color: #f9cc18;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 0;
+    font-weight: bold;
+}
+
+    .visit-source {
+    display: flex !important;
+    background: #013158;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 8px 10px;
+  font-size: 12px;
+  text-align: center;
+  border-radius: 0 0 6px 6px; /* biar nyatu dengan card bawah */
+  display: block; /* supaya full width */
+  width: 100%;
+  text-decoration: none;
+  align-items: center;        /* biar icon + teks sejajar vertikal */
+  justify-content: center;    /* biar semuanya center */
+  gap: 6px;                   /* jarak icon dan teks */
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.visit-source:hover {
+  background: #0068bd;        /* efek hover */
+}
+        
         .city-modal-backdrop {
             position: fixed;
             top: 0;
@@ -1056,6 +1244,47 @@
                 <span class="category-tag">Makassar</span>
                 <span class="category-tag">Yogyakarta</span>
                 <span class="category-tag" id="more-cities">Kota Lainnya...</span>
+            </div>
+
+            <div class="filters" style="display: flex; gap: 1rem; margin: 1.5rem 0;">
+                <!-- City Filter -->
+                  <div class="dropdown">
+                    <button class="dropdown-btn">Pilih Kota ▼</button>
+                    <div class="dropdown-content podcast-categories">
+                        <span class="category-tag active">Semua</span>
+                        <span class="category-tag">Jakarta</span>
+                        <span class="category-tag">Surabaya</span>
+                        <span class="category-tag">Bandung</span>
+                        <span class="category-tag">Makassar</span>
+                        <span class="category-tag">Yogyakarta</span>
+                        <span class="category-tag" id="more-cities">Kota Lainnya...</span>
+                    </div>
+                  </div>
+                
+                  <!-- Genre Filter -->
+                  <div class="dropdown-genre">
+                    <button class="dropdown-genre-btn">Pilih Topik ▼</button>
+                    <div class="dropdown-genre-content">
+                      <span class="genre-tag">Semua</span>
+                      <span class="genre-tag">Peristiwa</span>
+                      <span class="genre-tag">Bencana</span>
+                      <span class="genre-tag">Kesehatan dan Gaya Hidup</span>
+                      <span class="genre-tag">Transportasi dan Mobilitas</span>
+                      <span class="genre-tag">Teknologi</span>
+                      <span class="genre-tag">Kriminal</span>
+                    </div>
+                  </div>
+                
+                  <!-- language Filter -->
+                  <div class="dropdown-language">
+                    <button class="dropdown-language-btn">Pilih Bahasa ▼</button>
+                    <div class="dropdown-language-content">
+                      <span class="language-tag">Semua</span>
+                      <span class="language-tag">Bahasa Indonesia</span>
+                      <span class="language-tag">Bahasa Jawa</span>
+                      <span class="language-tag">Bahasa Sunda</span>
+                    </div>
+                  </div>
             </div>
 
             <div id="podcastContainer">
@@ -1470,10 +1699,13 @@
                     const card = document.createElement('div');
                     card.classList.add('podcast-video-card');
                     card.setAttribute('data-city', podcast.city?.cityName || '');
+                    card.setAttribute('data-topic', podcast.topicId?.topic || '');
+                    card.setAttribute('data-language', podcast.language?.languageName || '');
 
                     card.innerHTML = `
                         <div class="podcast-thumbnail">
                             <img src="https://dbdlxpquyiwpntlsizle.supabase.co/storage/v1/object/public/assets/Kota%20Berbicara-watermark.png" alt="Thumbnail Podcast">
+                            <div class="genre-label">${podcast.topicId?.topic || 'Lainnya'}</div>
                             <div class="podcast-video-meta-1">
                                 <div class="city-label">${podcast.city?.cityName || ''}</div>
                                 <div class="duration-label">${podcast?.duration || '345'}</div>
@@ -1495,6 +1727,10 @@
                                 <span>${podcast.createdAt} ${podcast.timezone}</span>
                             </div>
                         </div>
+                        <a class="visit-source" href=${podcast?.url || '#'} target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                            Kunjungi sumber berita
+                        </a>
                     `;
                     card.addEventListener('click', () => loadIntoPlayer(podcast));    
                     container.appendChild(card);
@@ -2090,6 +2326,126 @@ document.addEventListener('touchend', () => {
             }
         });
 
+        const cityDropdown = document.querySelector('.dropdown');
+    const cityBtn = cityDropdown.querySelector('.dropdown-btn');
+    const cityName = cityDropdown.querySelectorAll('.dropdown-content .category-tag');
+    let cityFilter = 'Semua';
+
+  cityBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    cityDropdown.classList.toggle('open');
+  });
+  document.addEventListener("click", (e) => {
+    if (!cityDropdown.contains(e.target) && !cityBtn.contains(e.target)) {
+        cityDropdown.classList.remove("show");
+    }
+    });
+
+  cityName.forEach(tag => {
+    tag.addEventListener('click', () => {
+      if (tag.id !== 'more-cities') {
+                document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
+                    tag.classList.add('active');
+                    cityFilter = tag.textContent.trim();
+                    const podcastCards = document.querySelectorAll('.podcast-video-card');
+                    applyFilters();
+                    const dropdownBtn = document.querySelector('.dropdown-btn');
+                    if (cityFilter === 'Semua') {
+                        dropdownBtn.textContent = "Pilih Kota" + ' ▼';
+                        showToast(`Menampilkan semua podcast`);
+                    }
+                    else{
+                        dropdownBtn.textContent = tag.textContent + ' ▼';
+                        showToast(`Menampilkan podcast dari ${cityFilter}`);
+                    }
+                    
+            }
+    });
+  });
+
+
+    const genreDropdown = document.querySelector('.dropdown-genre');
+    const genreBtn = genreDropdown.querySelector('.dropdown-genre-btn');
+    const genreTags = genreDropdown.querySelectorAll('.dropdown-genre-content .genre-tag');
+    let topicFilter = 'Semua';
+
+  genreBtn.addEventListener('click', () => {
+    genreDropdown.classList.toggle('open');
+  });
+
+  genreTags.forEach(tag => {
+    tag.addEventListener('click', () => {
+      if (tag.id !== 'more-cities') {
+                document.querySelectorAll('.genre-tag').forEach(t => t.classList.remove('active'));
+                    tag.classList.add('active');
+                    topicFilter = tag.textContent.trim();
+                    const podcastCards = document.querySelectorAll('.podcast-video-card');
+                    applyFilters();
+                    const dropdownBtn = document.querySelector('.dropdown-genre-btn');
+                    if (topicFilter === 'Semua') {
+                        dropdownBtn.textContent = "Pilih Topik" + ' ▼';
+                        showToast(`Menampilkan semua podcast`);
+                    }
+                    else{
+                        dropdownBtn.textContent = tag.textContent + ' ▼';
+                        showToast(`Menampilkan podcast ${topicFilter}`);
+                    }
+                    
+            }
+    });
+  });
+
+    const languageDropdown = document.querySelector('.dropdown-language');
+    const languageBtn = languageDropdown.querySelector('.dropdown-language-btn');
+    const languageTags = languageDropdown.querySelectorAll('.dropdown-language-content .language-tag');
+    let languageFilter = 'Semua';
+
+  languageBtn.addEventListener('click', () => {
+    languageDropdown.classList.toggle('open');
+  });
+
+  languageTags.forEach(tag => {
+    tag.addEventListener('click', () => {
+      if (tag.id !== 'more-cities') {
+                document.querySelectorAll('.language-tag').forEach(t => t.classList.remove('active'));
+                    tag.classList.add('active');
+                    languageFilter = tag.textContent.trim();
+                    applyFilters();
+                    const dropdownBtn = document.querySelector('.dropdown-language-btn');
+                    if (languageFilter === 'Semua') {
+                        dropdownBtn.textContent = "Pilih Bahasa" + ' ▼';
+                        showToast(`Menampilkan semua podcast`);
+                    }
+                    else{
+                        dropdownBtn.textContent = tag.textContent + ' ▼';
+                        showToast(`Menampilkan podcast ${languageFilter}`);
+                    }
+                    
+                    
+            }
+    });
+  });
+
+  function applyFilters() {
+    const podcastCards = document.querySelectorAll('.podcast-video-card');
+    podcastCards.forEach(card => {
+        const city = card.getAttribute('data-city');
+        const topic = card.getAttribute('data-topic');
+        const language = card.getAttribute('data-language');
+ 
+      const matchCity = (cityFilter === 'Semua' || city=== cityFilter);
+      const matchGenre = (topicFilter === 'Semua' || topic === topicFilter);
+      const matchLanguage = (languageFilter === 'Semua' || language === languageFilter);
+
+      if (matchCity && matchGenre && matchLanguage) {
+        card.style.display = 'block';
+      } 
+      else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
         // Search functionality
         const searchInput = document.getElementById('search-city');
         searchInput.addEventListener('input', () => {
@@ -2120,6 +2476,7 @@ document.addEventListener('touchend', () => {
     </script>
 </body>
 </html>
+
 
 
 
