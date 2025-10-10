@@ -2067,7 +2067,7 @@
         document.getElementById('download-link').addEventListener('click', (e) => {
             const downloadLink = document.getElementById('download-link');
             
-            downloadLink.href = downloadLink.getAttribute("url") + 'download=' + downloadLink.getAttribute("file-name");
+            downloadLink.href = downloadLink.getAttribute("url") + '?download=' + downloadLink.getAttribute("file-name");
             // In a real application, this would actually download the file
             // For demo purposes, we're just showing a toast
             showToast('Mengunduh podcast Anda...', 'success');
@@ -2550,6 +2550,7 @@ document.addEventListener('touchend', () => {
     </script>
 </body>
 </html>
+
 
 
 
