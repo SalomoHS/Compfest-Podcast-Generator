@@ -169,6 +169,46 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
         }
+        #generate {
+            position: relative;
+        }
+        
+        /* Overlay */
+        .server-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Disable interaction */
+        #generate form,
+        #generate button,
+        #generate input,
+        #generate textarea {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        
+        /* Message style */
+        .server-message {
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .server-message i {
+            font-size: 3rem;
+            color: #ff4d4f;
+            margin-bottom: 1rem;
+        }
+        
+        .server-message h3 {
+            margin-bottom: 0.5rem;
+        }
+
 
         input[type="text"],
         textarea,
@@ -1369,6 +1409,14 @@
 
         <!-- Tab Generate Podcast - Untuk membuat podcast baru yang akan diunduh -->
         <div id="generate" class="tab-content fade-in">
+            <div class="server-overlay">
+                <div class="server-message">
+                    <i class="fas fa-server"></i>
+                    <h3>Server Tidak Berjalan</h3>
+                    <p>Fitur ini sementara tidak dapat digunakan.<br>Silakan jalankan server terlebih dahulu.</p>
+                </div>
+            </div>
+
             <h3>Buat Podcast Kustom</h3>
             <p>Masukkan informasi untuk menghasilkan podcast yang sesuai dengan kebutuhan Anda. Podcast akan dihasilkan dan siap diunduh setelah proses selesai.</p>
 
@@ -1705,6 +1753,13 @@
     <div class="toast" id="toast">Pengaturan berhasil disimpan!</div>
 
     <script>
+        const serverRunning = false;
+
+        if (!serverRunning) {
+            document.querySelector('.server-overlay').style.display = 'flex';
+        } else {
+            document.querySelector('.server-overlay').style.display = 'none';
+        }
 
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', function(e) {
@@ -2550,6 +2605,7 @@ document.addEventListener('touchend', () => {
     </script>
 </body>
 </html>
+
 
 
 
