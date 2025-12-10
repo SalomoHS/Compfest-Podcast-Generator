@@ -1774,7 +1774,7 @@
             try {
                 const res = await fetch('https://kota-berbicara-backend.vercel.app/fetch_podcast'); 
                 const data = await res.json();
-                
+                console.log("FETCHH", data)
                 const container = document.getElementById('podcastContainer');
                 container.innerHTML = ''; // clear existing content
 
@@ -2603,6 +2603,7 @@ document.addEventListener('touchend', () => {
     </script>
 </body>
 </html>
+
 
 
 
