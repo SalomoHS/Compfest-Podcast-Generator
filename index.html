@@ -1778,7 +1778,7 @@
                 const container = document.getElementById('podcastContainer');
                 container.innerHTML = ''; // clear existing content
 
-                data.podcasts.forEach(podcast => {
+                data.data.podcasts.forEach(podcast => {
                     const card = document.createElement('div');
                     card.classList.add('podcast-video-card');
                     card.setAttribute('data-city', podcast.city?.cityName || '');
@@ -2603,6 +2603,7 @@ document.addEventListener('touchend', () => {
     </script>
 </body>
 </html>
+
 
 
 
